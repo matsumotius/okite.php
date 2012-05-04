@@ -1,0 +1,6 @@
+<?php
+
+require 'SplClassLoader.php';
+
+$class_loader = new SplClassLoader('Okite', __DIR__. '/src');
+$class_loader->register();
