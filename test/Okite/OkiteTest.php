@@ -15,9 +15,9 @@ class OkiteTest extends \PHPUnit_Framework_TestCase
         );
         $okite  = new Okite($schema);
         $result = $okite->validate(array('point' => 100));
-        $this->assertEquals(true, $result['isValid']);
+        $this->assertEquals(true, $result->isValid());
         $result = $okite->validate(array('point' => 1000));
-        $this->assertEquals(false, $result['isValid']);
+        $this->assertEquals(false, $result->isValid());
     }
 
     public function testStringOkite()
@@ -31,13 +31,12 @@ class OkiteTest extends \PHPUnit_Framework_TestCase
         );
         $okite  = new Okite($schema);
         $result = $okite->validate(array('name' => '123'));
-        $this->assertEquals(true, $result['isValid']);
+        $this->assertEquals(true, $result->isValid());
         $result = $okite->validate(array('name' => '1234'));
-        $this->assertEquals(false, $result['isValid']);
+        $this->assertEquals(false, $result->isValid());
         $result = $okite->validate(array('name' => 123));
-        $this->assertEquals(false, $result['isValid']);
+        $this->assertEquals(false, $result->isValid());
     }
-
 
     public function testArrayOkite()
     {
@@ -50,10 +49,10 @@ class OkiteTest extends \PHPUnit_Framework_TestCase
         );
         $okite  = new Okite($schema);
         $result = $okite->validate(array('item' => array(1,2,3)));
-        $this->assertEquals(true, $result['isValid']);
+        $this->assertEquals(true, $result->isValid());
         $result = $okite->validate(array('item' => array(1,2,3,4)));
-        $this->assertEquals(false, $result['isValid']);
+        $this->assertEquals(false, $result->isValid());
         $result = $okite->validate(array('item' => '1,2,3,4'));
-        $this->assertEquals(false, $result['isValid']);
+        $this->assertEquals(false, $result->isValid());
     }
 }

@@ -29,7 +29,7 @@ class CheckerTest extends \PHPUnit_Framework_TestCase
         $schema['min'] = 0;
         $schema['max'] = 999;
         $body          = array('key' => $schema);
-        $this->assertequals(true, $checker->check($body));
+        $this->assertEquals(true, $checker->check($body));
     }
 
     public function testLengthSpecifiedSchema()
@@ -38,7 +38,7 @@ class CheckerTest extends \PHPUnit_Framework_TestCase
         $schema           = $this->options;
         $schema['length'] = 100;
         $body             = array('key' => $schema);
-        $this->assertequals(true, $checker->check($body));
+        $this->assertEquals(true, $checker->check($body));
     }
 
     public function testIllegalTypeSchema()

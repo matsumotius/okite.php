@@ -7,24 +7,36 @@ class StringValidator extends Validator implements ValidatorInterface
 {
     public function validateType($value)
     {
-        return is_string($value);
+        if (false === is_string($value)) {
+            throw new ValidatorException('invalid type');
+        }
+        return true;
     }
 
     public function validateMin($value)
     {
         if ($this->canSkip('min')) return true;
-        return $this->schemaRow['min'] <= mb_strlen($value);
+        if ($this->schemaRow['min'] > mb_strlen($value)) {
+            throw new ValidatorException('less than minimum length');
+        }
+        return true;
     }
 
     public function validateMax($value)
     {
         if ($this->canSkip('max')) return true;
-        return $this->schemaRow['max'] >= mb_strlen($value);
+        if ($this->schemaRow['max'] < mb_strlen($value)) {
+            throw new ValidatorException('greater than maximum length');
+        }
+        return true;
     }
 
     public function validateLength($value)
     {
         if ($this->canSkip('length')) return true;
-        return $this->schemaRow['length'] == mb_strlen($value);
+        if ($this->schemaRow['length'] != mb_strlen($value)) {
+            throw new ValidatorException('invalid string length');
+        }
+        return true;
     }
 }

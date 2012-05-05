@@ -10,7 +10,14 @@ class StringValidatorTest extends \PHPUnit_Framework_TestCase
         $schemaRow         = Schema::$options;
         $validator         = new StringValidator($schemaRow);
         $this->assertEquals(true, $validator->validate('foo'));
-        $this->assertEquals(false, $validator->validate(100));
+    }
+
+    public function testIllegalType()
+    {
+        $this->setExpectedException('Okite\Exception\ValidatorException');
+        $schemaRow         = Schema::$options;
+        $validator         = new StringValidator($schemaRow);
+        $validator->validate(100);
     }
 
     public function testRangeSpecifiedOptions()
@@ -21,8 +28,16 @@ class StringValidatorTest extends \PHPUnit_Framework_TestCase
         $validator         = new StringValidator($schemaRow);
         $this->assertEquals(true,  $validator->validate('012'));
         $this->assertEquals(true,  $validator->validate('0123456789'));
-        $this->assertEquals(false, $validator->validate('01'));
-        $this->assertEquals(false, $validator->validate('0123456789a'));
+    }
+
+    public function testIllegalRange()
+    {
+        $this->setExpectedException('Okite\Exception\ValidatorException');
+        $schemaRow         = Schema::$options;
+        $schemaRow['min']  = 3;
+        $schemaRow['max']  = 10;
+        $validator         = new StringValidator($schemaRow);
+        $validator->validate('0123456789a');
     }
 
     public function testLengthSpecifiedOptions()
@@ -30,7 +45,15 @@ class StringValidatorTest extends \PHPUnit_Framework_TestCase
         $schemaRow           = Schema::$options;
         $schemaRow['length'] = 3;
         $validator           = new StringValidator($schemaRow);
-        $this->assertEquals(true,  $validator->validate('012'));
-        $this->assertEquals(false, $validator->validate('0123456789a'));
+        $validator->validate('012');
+    }
+
+    public function testIllegalLength()
+    {
+        $this->setExpectedException('Okite\Exception\ValidatorException');
+        $schemaRow           = Schema::$options;
+        $schemaRow['length'] = 3;
+        $validator           = new StringValidator($schemaRow);
+        $validator->validate('0123456789a');
     }
 }

@@ -11,7 +11,15 @@ class IntValidatorTest extends \PHPUnit_Framework_TestCase
         $schemaRow['type'] = 'int';
         $validator         = new IntValidator($schemaRow);
         $this->assertEquals(true,  $validator->validate(100));
-        $this->assertEquals(false, $validator->validate('foo'));
+    }
+
+    public function testIllegalType()
+    {
+        $this->setExpectedException('Okite\Exception\ValidatorException');
+        $schemaRow         = Schema::$options;
+        $schemaRow['type'] = 'int';
+        $validator         = new IntValidator($schemaRow);
+        $validator->validate('foo');
     }
 
     public function testNumSpecifiedOptions()
@@ -23,7 +31,17 @@ class IntValidatorTest extends \PHPUnit_Framework_TestCase
         $validator         = new IntValidator($schemaRow);
         $this->assertEquals(true,  $validator->validate(100));
         $this->assertEquals(true,  $validator->validate(50));
-        $this->assertEquals(false, $validator->validate(0));
-        $this->assertEquals(false, $validator->validate(1000));
+    }
+
+    public function testIllegalNum()
+    {
+        $this->setExpectedException('Okite\Exception\ValidatorException');
+        $schemaRow         = Schema::$options;
+        $schemaRow['type'] = 'int';
+        $schemaRow['min']  = 1;
+        $schemaRow['max']  = 100;
+        $validator         = new IntValidator($schemaRow);
+        $validator->validate(0);
+        $validator->validate(1000);
     }
 }
